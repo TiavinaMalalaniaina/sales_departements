@@ -1,0 +1,28 @@
+.request-table{
+    min-width: 400px;
+    max-height: 500px;
+    overflow-y: scroll;
+}
+.request-table__body--id {
+    text-align: left;
+    width: 5rem;
+}
+.request-table__body--action {
+    text-align: center;
+    width: 5rem;
+}
+.request-table__body--action span {
+    margin-right: 10px;
+    font-size: 125%;
+    color: #111;
+}
+.request-table__body--action span:hover {
+    transition: font-size 0.3s ease;
+    margin-right: 10px;
+    font-size: 160%;
+    color: red;
+}
+.request-table__body--quantity {
+    text-align: left;
+    width: 20rem;
+}
