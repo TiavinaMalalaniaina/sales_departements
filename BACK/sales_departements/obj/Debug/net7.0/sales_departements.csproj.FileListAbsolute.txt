@@ -31,3 +31,13 @@ D:\Etude\L3\S5\ORG\301_Gestion_entreprise\PROJET\sales_departements\BACK\sales_d
 D:\Etude\L3\S5\ORG\301_Gestion_entreprise\PROJET\sales_departements\BACK\sales_departements\obj\Debug\net7.0\sales_departements.pdb
 D:\Etude\L3\S5\ORG\301_Gestion_entreprise\PROJET\sales_departements\BACK\sales_departements\obj\Debug\net7.0\sales_departements.genruntimeconfig.cache
 D:\Etude\L3\S5\ORG\301_Gestion_entreprise\PROJET\sales_departements\BACK\sales_departements\obj\Debug\net7.0\ref\sales_departements.dll
+D:\Etude\L3\S5\ORG\301_Gestion_entreprise\PROJET\sales_departements\BACK\sales_departements\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.dll
+D:\Etude\L3\S5\ORG\301_Gestion_entreprise\PROJET\sales_departements\BACK\sales_departements\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\Etude\L3\S5\ORG\301_Gestion_entreprise\PROJET\sales_departements\BACK\sales_departements\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\Etude\L3\S5\ORG\301_Gestion_entreprise\PROJET\sales_departements\BACK\sales_departements\bin\Debug\net7.0\Npgsql.dll
+D:\Etude\L3\S5\ORG\301_Gestion_entreprise\PROJET\sales_departements\BACK\sales_departements\bin\Debug\net7.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+D:\Etude\L3\S5\ORG\301_Gestion_entreprise\PROJET\sales_departements\BACK\sales_departements\bin\Debug\net7.0\Humanizer.dll
+D:\Etude\L3\S5\ORG\301_Gestion_entreprise\PROJET\sales_departements\BACK\sales_departements\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
+D:\Etude\L3\S5\ORG\301_Gestion_entreprise\PROJET\sales_departements\BACK\sales_departements\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+D:\Etude\L3\S5\ORG\301_Gestion_entreprise\PROJET\sales_departements\BACK\sales_departements\bin\Debug\net7.0\Mono.TextTemplating.dll
+D:\Etude\L3\S5\ORG\301_Gestion_entreprise\PROJET\sales_departements\BACK\sales_departements\bin\Debug\net7.0\System.CodeDom.dll
