@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using sales_departements.Context;
 
 namespace sales_departements.Models;
 
@@ -16,4 +18,9 @@ public partial class Product
     public virtual ICollection<RequestDetail> RequestDetails { get; } = new List<RequestDetail>();
 
     public virtual ICollection<SupplierProduct> SupplierProducts { get; } = new List<SupplierProduct>();
+
+
+    public static List<Product> GetProducts(SalesDepartementsContext context) {
+        return context.Products.ToList();
+    }
 }

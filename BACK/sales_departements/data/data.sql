@@ -1,4 +1,4 @@
-CREATE DATABASE sales_departement
+--CREATE DATABASE sales_departement
 
 CREATE OR REPLACE FUNCTION custom_seq(
     in_prefix VARCHAR,

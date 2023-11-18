@@ -1,0 +1,10 @@
+
+
+PAGE 1: demande de produit
+	-récupération de tous les produits
+	-insertion de demande
+
+PAGE 2: validation de demande
+	-connection en tant que chef de département
+	-validation de demande
+

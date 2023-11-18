@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using sales_departements.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace sales_departements.Models;
+namespace sales_departements.Context;
 
 public partial class SalesDepartementsContext : DbContext
 {
@@ -41,7 +40,7 @@ public partial class SalesDepartementsContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Host=localhost;Database=sales_departements;Username=postgres;Password=malalaniaina");
+        => optionsBuilder.UseNpgsql("Host=localhost;Database=sales_departement;Username=postgres;Password=Etu002057");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -75,7 +74,16 @@ public partial class SalesDepartementsContext : DbContext
 
             entity.ToTable("employee");
 
+            entity.HasIndex(e => e.Email, "person_email_key").IsUnique();
+
             entity.HasIndex(e => e.PersonId, "employee_person_id_key").IsUnique();
+            entity.Property(e => e.Email)
+                .HasMaxLength(100)
+                .HasColumnName("email");
+
+            entity.Property(e => e.Password)
+                .HasMaxLength(20)
+                .HasColumnName("password");
 
             entity.Property(e => e.EmployeeId)
                 .HasDefaultValueSql("custom_seq('EMP'::character varying, 'employee_seq'::character varying, 5)")
@@ -94,6 +102,8 @@ public partial class SalesDepartementsContext : DbContext
             entity.Property(e => e.Salary)
                 .HasPrecision(10, 2)
                 .HasColumnName("salary");
+            entity.Property(e => e.Daf)
+                .HasColumnName("daf");
 
             entity.HasOne(d => d.Department).WithMany(p => p.Employees)
                 .HasForeignKey(d => d.DepartmentId)
@@ -110,8 +120,6 @@ public partial class SalesDepartementsContext : DbContext
 
             entity.ToTable("person");
 
-            entity.HasIndex(e => e.Email, "person_email_key").IsUnique();
-
             entity.Property(e => e.PersonId)
                 .HasDefaultValueSql("custom_seq('PER'::character varying, 'person_seq'::character varying, 5)")
                 .HasColumnType("character varying")
@@ -120,9 +128,7 @@ public partial class SalesDepartementsContext : DbContext
                 .HasMaxLength(255)
                 .HasColumnName("address");
             entity.Property(e => e.DateOfBirth).HasColumnName("date_of_birth");
-            entity.Property(e => e.Email)
-                .HasMaxLength(100)
-                .HasColumnName("email");
+
             entity.Property(e => e.FirstName)
                 .HasMaxLength(50)
                 .HasColumnName("first_name");
@@ -298,6 +304,7 @@ public partial class SalesDepartementsContext : DbContext
                 .HasColumnType("character varying")
                 .HasColumnName("product_id");
             entity.Property(e => e.Quantity).HasColumnName("quantity");
+            entity.Property(e => e.Reason).HasColumnName("reason");
             entity.Property(e => e.RequestId)
                 .HasColumnType("character varying")
                 .HasColumnName("request_id");
