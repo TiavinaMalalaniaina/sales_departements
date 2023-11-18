@@ -167,3 +167,60 @@ INSERT INTO "public".department( department_id, department_name, department_head
 INSERT INTO "public".employee( employee_id, person_id, department_id, hire_date, job_title, salary, email, password, daf ) VALUES ( 'EMP00001', 'PER00001', 'DEP00001', '2022-12-12', 'DEV', 2000000, 'jeanmirlin.r@gmail.com', 'mirlin', false);
 INSERT INTO "public".request( request_id, department_id, created_at, is_validated ) VALUES ( 'REQ00001', 'DEP00001', '2020-11-11 12.00.00 am', false);
 INSERT INTO "public".request_details( request_details_id, request_id, product_id, quantity, reason ) VALUES ( 'RED00001', 'REQ00001', 'PRO00001', 5, 'informatisation');
+
+insert into supplier values
+(default, 'Jumbo Score', 'jumbo@gmail.com', '+261 34 11 111 11', 'Tanjombato'),
+(default, 'Shoprite', 'shoprite@gmail.com', '+261 33 25 255 25', 'Analakely'),
+(default, 'Leader Price', 'leader@gmail.com', '+261 32 22 222 55', 'Ankadimbahoaka');
+
+insert into proforma values
+(default, '20-11-2023', '20-12-2023', 'SUP00001'),
+(default, '20-11-2023', '20-12-2023', 'SUP00002'),
+(default, '20-11-2023', '20-12-2023', 'SUP00003');
+
+insert into proforma_details values
+(default, 'PRO00001', 'PRO00001', 20, 500),
+(default, 'PRO00001', 'PRO00002', 35, 300),
+(default, 'PRO00002', 'PRO00001', 20, 550),
+(default, 'PRO00002', 'PRO00002', 35, 250),
+(default, 'PRO00003', 'PRO00001', 20, 600),
+(default, 'PRO00003', 'PRO00002', 35, 350);
+
+insert into supplier_product values
+(default, 'SUP00001', 'PRO00001'),
+(default, 'SUP00001', 'PRO00002'),
+(default, 'SUP00002', 'PRO00001'),
+(default, 'SUP00002', 'PRO00002'),
+(default, 'SUP00003', 'PRO00001'),
+(default, 'SUP00003', 'PRO00002');
+
+insert into purchase_order(purchase_order_id, delivery_days, supplier_id) values 
+(default, 30, 'SUP00001'),
+(default, 30, 'SUP00002');
+
+insert into purchase_order_details values 
+(default, 'PUR00001', 'PRO00001', 20, 500),
+(default, 'PUR00002', 'PRO00002', 35, 250);
+
+
+-- Bon de commande
+select su.name, su.contact_email, su.contact_phone, su.address, p.product_name, pod.quantity, pod.price, po.created_at, po.delivery_days
+from supplier su
+join purchase_order po on po.supplier_id = su.supplier_id
+join purchase_order_details pod on pod.purchase_order_id = po.purchase_order_id
+join product p on p.product_id = pod.product_id
+
+
+-- moin disant
+SELECT proforma_id, product_id, quantity, price
+FROM ( SELECT
+        proforma_id,
+        product_id,
+        quantity,
+        price,
+        ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY price) AS rank
+    FROM
+        proforma_details
+) ranked_products
+WHERE
+    rank = 1;
