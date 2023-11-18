@@ -7,6 +7,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddDistributedMemoryCache(); // This is for storing session data in memory. Use a distributed cache for production.
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Adjust the timeout as needed.
+    options.Cookie.HttpOnly = true;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -16,7 +24,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
 app.UseHttpsRedirection();
+
+app.UseSession();
 
 app.UseAuthorization();
 

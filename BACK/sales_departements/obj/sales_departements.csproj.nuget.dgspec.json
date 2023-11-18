@@ -1,27 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Etude\\L3\\S5\\ORG\\301_Gestion_entreprise\\PROJET\\sales_departements\\BACK\\sales_departements\\sales_departements.csproj": {}
+    "/home/mirlin/ITUniversity/Projets/S5/Mr Tovo/Sales/sales_departements/BACK/sales_departements/sales_departements.csproj": {}
   },
   "projects": {
-    "D:\\Etude\\L3\\S5\\ORG\\301_Gestion_entreprise\\PROJET\\sales_departements\\BACK\\sales_departements\\sales_departements.csproj": {
+    "/home/mirlin/ITUniversity/Projets/S5/Mr Tovo/Sales/sales_departements/BACK/sales_departements/sales_departements.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Etude\\L3\\S5\\ORG\\301_Gestion_entreprise\\PROJET\\sales_departements\\BACK\\sales_departements\\sales_departements.csproj",
+        "projectUniqueName": "/home/mirlin/ITUniversity/Projets/S5/Mr Tovo/Sales/sales_departements/BACK/sales_departements/sales_departements.csproj",
         "projectName": "sales_departements",
-        "projectPath": "D:\\Etude\\L3\\S5\\ORG\\301_Gestion_entreprise\\PROJET\\sales_departements\\BACK\\sales_departements\\sales_departements.csproj",
-        "packagesPath": "C:\\Users\\tiavi\\.nuget\\packages\\",
-        "outputPath": "D:\\Etude\\L3\\S5\\ORG\\301_Gestion_entreprise\\PROJET\\sales_departements\\BACK\\sales_departements\\obj\\",
+        "projectPath": "/home/mirlin/ITUniversity/Projets/S5/Mr Tovo/Sales/sales_departements/BACK/sales_departements/sales_departements.csproj",
+        "packagesPath": "/home/mirlin/.nuget/packages/",
+        "outputPath": "/home/mirlin/ITUniversity/Projets/S5/Mr Tovo/Sales/sales_departements/BACK/sales_departements/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\tiavi\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/mirlin/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "/usr/share/dotnet/sdk/7.0.306/Sdks/Microsoft.NET.Sdk.Web/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -49,6 +48,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[7.0.2, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
@@ -78,7 +81,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.306/RuntimeIdentifierGraph.json"
         }
       }
     }
