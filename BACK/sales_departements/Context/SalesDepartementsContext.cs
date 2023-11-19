@@ -14,6 +14,8 @@ public partial class SalesDepartementsContext : DbContext
     {
     }
 
+    public virtual DbSet<VProforma> VProformas { get; set; }
+
     public virtual DbSet<Department> Departments { get; set; }
 
     public virtual DbSet<Employee> Employees { get; set; }
@@ -44,6 +46,30 @@ public partial class SalesDepartementsContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<VProforma>(entity =>
+        {
+            entity.HasNoKey();
+            entity.ToTable("v_proforma_moins_disant");
+
+            entity.Property(e => e.ProformaDetailsId)
+                .HasColumnType("character varying")
+                .HasColumnName("proforma_details_id");
+            entity.Property(e => e.ProformaId)
+                .HasColumnType("character varying")
+                .HasColumnName("proforma_id");
+            entity.Property(e => e.ProductId)
+                .HasColumnType("character varying")
+                .HasColumnName("product_id");
+            entity.Property(e => e.Quantity)
+                .HasColumnName("quantity");
+            entity.Property(e => e.Price)
+                .HasColumnName("price");
+            entity.Property(e => e.SupplierId)
+                .HasColumnType("character varying")
+                .HasColumnName("supplier_id");
+        });
+
+
         modelBuilder.Entity<Department>(entity =>
         {
             entity.HasKey(e => e.DepartmentId).HasName("department_pkey");
@@ -225,7 +251,8 @@ public partial class SalesDepartementsContext : DbContext
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("created_at");
-            entity.Property(e => e.DeliveryDays).HasColumnName("delivery_days");
+            entity.Property(e => e.DeliveryDays).HasColumnName("delivery_days")
+                .HasDefaultValueSql("30");
             entity.Property(e => e.SupplierId)
                 .HasColumnType("character varying")
                 .HasColumnName("supplier_id");
