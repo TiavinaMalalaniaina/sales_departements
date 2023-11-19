@@ -15,6 +15,7 @@ namespace sales_departements.Controllers
             List<ProformaDetail> proformaDetails = null;
             List<Proforma> proformas = null;
             List<Supplier> suppliers = null;
+            List<string> insertedPurchaseOrder = null;
             NpgsqlConnection connection = null;
 
             try
@@ -37,10 +38,28 @@ namespace sales_departements.Controllers
                         SupplierId = supplierId
                     };
 
-                    List<string> insertedIds = PurchaseOrder.InsertPurchaseOrder(purchaseOrder, connection);
+                    insertedPurchaseOrder = PurchaseOrder.InsertPurchaseOrder(purchaseOrder, connection);
 
-                    Console.WriteLine($"Identifiants insérés : {string.Join(", ", insertedIds)}");
+                    Console.WriteLine($"Identifiants insérés : {string.Join(", ", insertedPurchaseOrder)}");
                 }
+
+                //List<string> purchaseOrderIds = insertedPurchaseOrder;
+                List<string> proformaDetailIds = proformaDetails.Select(pd => pd.ProformaDetailsId).ToList();
+
+                List<PurchaseOrderDetail> purchaseOrderDetails = PurchaseOrderDetail.GetFromPurchaseOrder(insertedPurchaseOrder, proformaDetailIds, connection);
+
+                PurchaseOrderDetail newPurchaseOrderDetail = new PurchaseOrderDetail
+                {
+                    PurchaseOrderId = insertedPurchaseOrder,
+                    ProductId = purchaseOrderDetails.ProductId,
+                    Quantity = purchaseOrderDetails.Quantity,
+                    Price = purchaseOrderDetails.Price
+                };
+
+                List<string> insertPurchaseDetail = PurchaseOrderDetail.InsertPurchaseOrderDetail(newPurchaseOrderDetail, connection);
+
+                Console.WriteLine($"Identifiants insérés : {string.Join(", ", insertPurchaseDetail)}");
+
 
                 ProformaDetailViewModel viewModel = new ProformaDetailViewModel
                 {
