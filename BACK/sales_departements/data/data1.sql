@@ -224,3 +224,14 @@ FROM ( SELECT
 ) ranked_products
 WHERE
     rank = 1;
+
+
+-- select detail bon de commande
+
+SELECT pd.product_id, quantity, price
+FROM proforma_details pd
+JOIN proforma p ON p.proforma_id = pd.proforma_id
+JOIN supplier s ON s.supplier_id = p.supplier_id
+JOIN purchase_order po ON po.supplier_id = s.supplier_id
+JOIN product pr on pr.product_id = pd.product_id
+WHERE po.purchase_order_id IN ('PUR00008', 'PUR00009') and pd.proforma_details_id IN ('PRD00001', 'PRD00004');
