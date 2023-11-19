@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using sales_departements.Models;
 using Npgsql;
+using sales_departements.Context;
 
 namespace sales_departements.Controllers
 {
@@ -8,18 +9,84 @@ namespace sales_departements.Controllers
     [Route("proformaDetail")]
     public class ProformaController : Controller
     {
+
         [HttpGet]
         [Route("select")]
+        public IActionResult Test() {
+            Dictionary<string, List<VProforma>> dico = new Dictionary<string, List<VProforma>>();
+            try {
+                SalesDepartementsContext context = new ();
+                using (var transaction = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        List<string> productIds = new List<string> { "PRO00001", "PRO00002" };
+                        List<VProforma> vProformas = context.VProformas.Where(p => productIds.Contains(p.ProductId)).ToList();
+                        foreach (var item in vProformas)
+                        {
+                            if (dico.ContainsKey(item.SupplierId)) {
+                                List<VProforma> v = dico[item.SupplierId];
+                                v.Add(item);
+                            } else {
+                                List<VProforma> v = new();
+                                v.Add(item);
+                                dico.Add(item.SupplierId, v);
+                            }
+                        }
+                        var items = dico.Values;
+                        foreach (List<VProforma> vProformaPluriel in items)
+                        {
+                            string supplierId = vProformaPluriel[0].SupplierId;
+                            PurchaseOrder purchaseOrder = new PurchaseOrder{
+                                SupplierId = supplierId,
+                            };
+                            context.PurchaseOrders.Add(purchaseOrder);
+                            context.SaveChanges();
+                            foreach (VProforma vProforma in vProformaPluriel)
+                            {
+                                PurchaseOrderDetail purchaseOrderDetail = new PurchaseOrderDetail{
+                                    PurchaseOrderId = purchaseOrder.PurchaseOrderId,
+                                    ProductId = vProforma.ProductId,
+                                    Quantity = vProforma.Quantity,
+                                    Price = vProforma.Price,
+                                };
+                                context.PurchaseOrderDetails.Add(purchaseOrderDetail);
+                            }
+                            context.SaveChanges();
+                        }
+                        context.SaveChanges();
+
+                        transaction.Commit();
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                    }
+                }
+                
+                context.SaveChanges();
+            } catch (Exception ex) {
+                Console.WriteLine(ex);
+            }
+            return null;
+        }
+
+
+        [HttpGet]
+        [Route("select-2")]
         public IActionResult Index()
         {
             List<ProformaDetail> proformaDetails = null;
             List<Proforma> proformas = null;
             List<Supplier> suppliers = null;
             List<string> insertedPurchaseOrder = null;
+            List<string> proformaDetailIds = null;
+            List<ProformaDetail> purchaseOrderDetails = null;
             NpgsqlConnection connection = null;
 
             try
             {
+
                 connection = new PostgresConnection().Connect();
 
                 List<string> productIds = new List<string> { "PRO00001", "PRO00002" };
@@ -40,25 +107,43 @@ namespace sales_departements.Controllers
 
                     insertedPurchaseOrder = PurchaseOrder.InsertPurchaseOrder(purchaseOrder, connection);
 
-                    Console.WriteLine($"Identifiants insérés : {string.Join(", ", insertedPurchaseOrder)}");
+                    Console.WriteLine($"@PurchaseOrderId : {string.Join(", ", insertedPurchaseOrder)}");
                 }
 
-                //List<string> purchaseOrderIds = insertedPurchaseOrder;
-                List<string> proformaDetailIds = proformaDetails.Select(pd => pd.ProformaDetailsId).ToList();
+                proformaDetailIds = proformaDetails.Select(pd => pd.ProformaDetailsId).ToList();
+                //purchaseOrderDetails = ProformaDetail.GetFromProformaOrder(insertedPurchaseOrder, proformaDetailIds, connection);
 
-                List<PurchaseOrderDetail> purchaseOrderDetails = PurchaseOrderDetail.GetFromPurchaseOrder(insertedPurchaseOrder, proformaDetailIds, connection);
-
-                PurchaseOrderDetail newPurchaseOrderDetail = new PurchaseOrderDetail
+                foreach (var proformaDetailId in proformaDetailIds)
                 {
-                    PurchaseOrderId = insertedPurchaseOrder,
-                    ProductId = purchaseOrderDetails.ProductId,
-                    Quantity = purchaseOrderDetails.Quantity,
-                    Price = purchaseOrderDetails.Price
-                };
+                    Console.WriteLine($"ProformaDetailsId: {proformaDetailId}");
+                }
 
-                List<string> insertPurchaseDetail = PurchaseOrderDetail.InsertPurchaseOrderDetail(newPurchaseOrderDetail, connection);
+                // List<PurchaseOrderDetail> newPurchaseOrderDetails = new();
+                // foreach (var orderDetail in proformaDetails)
+                // {
+                //     foreach (var purchaseOrderId in insertedPurchaseOrder)
+                //     {
+                //         PurchaseOrderDetail newDetail = new PurchaseOrderDetail
+                //         {
+                //         };
+                //         newPurchaseOrderDetails.Add(newDetail);
+                //     }
+                // }
 
-                Console.WriteLine($"Identifiants insérés : {string.Join(", ", insertPurchaseDetail)}");
+                //             PurchaseOrderId = insertedPurchaseOrder,
+                //             ProductId = proformaDetails.ProductId,
+                //             Quantity = proformaDetails.Quantity,
+                //             Price = proformaDetails.Price
+                
+                // Console.WriteLine(proformaDetails);
+                // foreach (var item in newPurchaseOrderDetails)
+                // {
+                //     Console.WriteLine(item);                    
+                // }
+
+                // List<string> insertPurchaseDetail = PurchaseOrderDetail.InsertPurchaseOrderDetail(newPurchaseOrderDetails, connection);
+
+                // Console.WriteLine($"Identifiants insérés -------------------- : {string.Join(", ", insertPurchaseDetail)}");
 
 
                 ProformaDetailViewModel viewModel = new ProformaDetailViewModel
